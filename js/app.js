@@ -45,7 +45,9 @@ function qHTML(q, filled) {
   const [a, b] = q.split("___");
   return md(a) + (filled != null ? `<span class="filled">${esc(filled)}</span>` : `<span class="blank">&nbsp;</span>`) + md(b);
 }
-function chapLabel(t) { return t.label ? "Fiche de grammaire" : t.sub ? "19." + t.sub + " · Idiomes et structures" : "Chapitre " + t.id }
+const GROUPS = [["base", "Fondamentaux A1–A2"], ["gram", "Cours A2"], ["idiom", "Idiomes et structures"]];
+const groupOf = t => t.group || (t.sub ? "idiom" : "gram");
+function chapLabel(t) { return groupOf(t) === "base" ? "Fondamentaux A1–A2" : t.label ? "Fiche de grammaire" : t.sub ? "19." + t.sub + " · Idiomes et structures" : "Chapitre " + t.id }
 const KIND = { mc: "Choisis la bonne réponse", fill: "Complète", tr: "Écris la phrase", ord: "Remets dans l'ordre", match: "Associe" };
 
 // ---------- recherche ----------
@@ -107,8 +109,7 @@ function renderRail(current) {
         <span class="snip">${snippet(h.text, query)}</span></button>`).join("")
       : `<p class="hint">Aucun résultat pour « ${esc(query)} ». Essaie un autre mot (les accents ne comptent pas).</p>`;
   } else {
-    list = `<h2>Grammaire</h2>${TOPICS.filter(t => !t.sub).map(row).join("")}
-      <h2>Idiomes et structures</h2>${TOPICS.filter(t => t.sub).map(row).join("")}`;
+    list = GROUPS.map(([g, label]) => `<h2>${label}</h2>${TOPICS.filter(t => groupOf(t) === g).map(row).join("")}`).join("");
   }
   rail.innerHTML = searchBox + `<div id="railList">${list}</div>`;
   rail.querySelectorAll(".topic").forEach(b => b.onclick = () => go(b.dataset.id));
@@ -146,6 +147,12 @@ function blockHTML(b, k) {
   return "";
 }
 function ruleHTML(t) {
+  if (!t.rule) { // rappel = début de la fiche, jusqu'au 2e titre
+    const b = BOOK[t.id] || [], out = [];
+    let heads = 0;
+    for (const x of b) { if (x.h && ++heads > 2) break; out.push(x) }
+    return out.map(blockHTML).join("");
+  }
   return t.rule.map(r => {
     if (typeof r === "string") return `<p>${md(r)}</p>`;
     if (r.ex) return `<div class="ex"><span>${md(r.ex[0])}</span><i>${md(r.ex[1])}</i></div>`;
