@@ -190,6 +190,23 @@ a.ghost, a.primary { text-decoration: none; display: inline-block }
 .pair-row select { font: inherit; padding: 7px 8px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); min-width: 0 }
 .pair-row.right { background: var(--ok-soft) } .pair-row.wrong { background: var(--bad-soft) }
 .pair-row .fix { grid-column: 2; font-size: 0.85rem; color: var(--bad); font-weight: 700 }
+
+/* rail : groupes repliables, titres collants, ombres de défilement */
+.rail { padding-top: 0; background:
+  linear-gradient(var(--surface) 40%, transparent) top / 100% 36px no-repeat local,
+  linear-gradient(transparent, var(--surface) 60%) bottom / 100% 36px no-repeat local,
+  radial-gradient(farthest-side at 50% 0, color-mix(in srgb, var(--fg) 22%, transparent), transparent) top / 100% 12px no-repeat scroll,
+  radial-gradient(farthest-side at 50% 100%, color-mix(in srgb, var(--fg) 22%, transparent), transparent) bottom / 100% 12px no-repeat scroll,
+  var(--surface); }
+.search { position: sticky; top: 0; z-index: 3; background: var(--surface); padding-top: 8px }
+.grp + .grp { border-top: 1px solid var(--line) }
+.grp-head { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 8px; width: 100%; border: 0; background: var(--surface); padding: 12px 10px 10px; text-align: left }
+.grp-head:hover .grp-name { color: var(--accent) }
+.chev { display: inline-block; font-size: 1.2rem; line-height: 1; color: var(--muted); transition: transform .15s; width: 1em; text-align: center }
+.grp-head[aria-expanded="true"] .chev { transform: rotate(90deg) }
+.grp-name { font-family: var(--font-display); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; flex: 1 }
+.grp-count { font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums }
+.grp-body { padding-bottom: 6px }
 </style>
 
 </head>
@@ -219,11 +236,11 @@ a.ghost, a.primary { text-decoration: none; display: inline-block }
 </div>
 
 
-<script src="js/grammar.js?v=3"></script>
-<script src="js/verbs.js?v=3"></script>
-<script src="js/book.js?v=3"></script>
-<script src="js/sets.js?v=3"></script>
-<script src="js/basics.js?v=3"></script>
-<script src="js/app.js?v=3"></script>
+<script src="js/grammar.js?v=4"></script>
+<script src="js/verbs.js?v=4"></script>
+<script src="js/book.js?v=4"></script>
+<script src="js/sets.js?v=4"></script>
+<script src="js/basics.js?v=4"></script>
+<script src="js/app.js?v=4"></script>
 </body>
 </html>

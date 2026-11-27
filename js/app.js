@@ -13,7 +13,7 @@ const store = {
   set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)) } catch {} }
 };
 let P = store.get();               // { last, view, sel: {tid: setId}, t: { tid: { setId: { r: {idx: 1|0}, best, runs } } } }
-P.t = P.t || {}; P.sel = P.sel || {};
+P.t = P.t || {}; P.sel = P.sel || {}; P.open = P.open || {};
 let view = P.view === "rules" ? "rules" : "ex";
 const sp = (tid, sid) => { const t = (P.t[tid] = P.t[tid] || {}); return (t[sid] = t[sid] || { r: {}, best: 0, runs: 0 }) };
 const save = () => store.set(P);
@@ -109,10 +109,32 @@ function renderRail(current) {
         <span class="snip">${snippet(h.text, query)}</span></button>`).join("")
       : `<p class="hint">Aucun résultat pour « ${esc(query)} ». Essaie un autre mot (les accents ne comptent pas).</p>`;
   } else {
-    list = GROUPS.map(([g, label]) => `<h2>${label}</h2>${TOPICS.filter(t => groupOf(t) === g).map(row).join("")}`).join("");
+    const curGroup = current ? groupOf(byId(current)) : null;
+    list = GROUPS.map(([g, label]) => {
+      const ts = TOPICS.filter(t => groupOf(t) === g);
+      const open = P.open[g] ?? (g === curGroup || (!curGroup && g === GROUPS[0][0]));
+      const done = ts.filter(t => topicStats(t).state === 2).length;
+      return `<section class="grp" data-g="${g}">
+        <button class="grp-head" aria-expanded="${open}" data-g="${g}"><span class="chev" aria-hidden="true">›</span><span class="grp-name">${label}</span>
+          <span class="grp-count">${view === "ex" ? `${done}/${ts.length}` : ts.length} chapitres</span></button>
+        <div class="grp-body"${open ? "" : " hidden"}>${ts.map(row).join("")}</div></section>`;
+    }).join("");
   }
   rail.innerHTML = searchBox + `<div id="railList">${list}</div>`;
   rail.querySelectorAll(".topic").forEach(b => b.onclick = () => go(b.dataset.id));
+  rail.querySelectorAll(".grp-head").forEach(b => b.onclick = () => {
+    const open = b.getAttribute("aria-expanded") !== "true";
+    P.open[b.dataset.g] = open; save();
+    b.setAttribute("aria-expanded", String(open));
+    b.nextElementSibling.hidden = !open;
+  });
+  // garder le chapitre ouvert visible dans la colonne (sans faire défiler la page)
+  const el = rail.querySelector('.topic[aria-current="true"]');
+  if (el && current !== renderRail.last && rail.scrollHeight > rail.clientHeight) {
+    const top = el.getBoundingClientRect().top - rail.getBoundingClientRect().top + rail.scrollTop;
+    if (top < rail.scrollTop + 60 || top > rail.scrollTop + rail.clientHeight - 60) rail.scrollTop = top - rail.clientHeight / 3;
+  }
+  renderRail.last = current;
   rail.querySelectorAll(".hit").forEach(b => b.onclick = () => { pendingSec = +b.dataset.sec; if (location.hash === "#r-" + b.dataset.id) route(); else location.hash = "r-" + b.dataset.id });
   const qi = document.getElementById("q");
   if (qi) qi.addEventListener("input", () => {
