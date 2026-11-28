@@ -160,6 +160,100 @@ const NEG_TR = [
   O(["Personne", "n'est", "venu", "."], "Personne en sujet + ne."),
   O(["Je", "n'ai", "vu", "personne", "."], "personne après le participe.")
 ];
+const NEG_SENS = [
+  M("I never eat meat.", "Je ne mange jamais de viande.", ["Je ne mange plus de viande.", "Je ne mange pas encore de viande."], "never → ne … jamais."),
+  M("She doesn't work anymore.", "Elle ne travaille plus.", ["Elle ne travaille jamais.", "Elle ne travaille pas encore."], "not anymore → ne … plus."),
+  M("We haven't eaten yet.", "Nous n'avons pas encore mangé.", ["Nous n'avons plus mangé.", "Nous n'avons jamais mangé."], "not yet → ne … pas encore."),
+  M("I only have five euros.", "Je n'ai que cinq euros.", ["Je n'ai pas cinq euros.", "Je n'ai plus cinq euros."], "only → ne … que. Ce n'est pas une vraie négation."),
+  M("Nobody called.", "Personne n'a appelé.", ["Personne a appelé.", "Rien n'a appelé."], "Personne en sujet + ne. À l'écrit, garde le ne."),
+  M("I didn't understand anything.", "Je n'ai rien compris.", ["Je n'ai compris rien.", "Je n'ai pas rien compris."], "rien se place entre l'auxiliaire et le participe, et jamais avec pas."),
+  M("I can't find my keys anywhere.", "Je ne trouve mes clés nulle part.", ["Je ne trouve pas mes clés nulle part.", "Je ne trouve mes clés partout."], "nowhere → ne … nulle part, sans pas."),
+  M("Not one student answered.", "Aucun étudiant n'a répondu.", ["Aucun étudiant a répondu.", "Aucun étudiant n'a pas répondu."], "aucun + ne, jamais avec pas."),
+  M("I don't like it at all.", "Je n'aime pas du tout ça.", ["Je n'aime plus ça.", "Je n'aime jamais ça."], "not at all → ne … pas du tout."),
+  M("I didn't see anyone.", "Je n'ai vu personne.", ["Je n'ai personne vu.", "Je n'ai pas vu personne."], "personne se place après le participe."),
+  M("There's nothing interesting.", "Il n'y a rien d'intéressant.", ["Il n'y a rien intéressant.", "Il n'y a pas rien d'intéressant."], "rien + de + adjectif masculin."),
+  M("I hardly slept.", "J'ai à peine dormi.", ["J'ai dormi à peine.", "Je n'ai pas à peine dormi."], "à peine = hardly, sans ne, avant le participe."),
+  M("He didn't do much.", "Il n'a pas fait grand-chose.", ["Il n'a fait rien.", "Il n'a pas fait beaucoup chose."], "not much → ne … pas grand-chose."),
+  F("Il n'est ___ allé en Chine. (never)", "jamais", "jamais entre l'auxiliaire et le participe."),
+  F("Je ne connais ___ ici. (no one)", "personne", "ne … personne."),
+  F("On n'a ___ problème. (no, not a single)", "aucun", "problème est masculin → aucun."),
+  F("Elle n'a ___ vingt ans. (only)", "que", "ne … que = seulement."),
+  F("Il ne reste ___ à manger. (nothing)", "rien", "ne … rien."),
+  F("Ils n'habitent ___ ici. (not anymore)", "plus", "ne … plus."),
+  F("Je n'ai ___ fini. (not yet)", ["pas encore"], "ne … pas encore ; au passé composé, avant le participe.")
+];
+const NEG_DE = [
+  Tr("Mets à la forme négative : J'ai des amis à Paris.", ["Je n'ai pas d'amis à Paris."], "des → d' devant une voyelle."),
+  Tr("Mets à la forme négative : Il boit du vin.", ["Il ne boit pas de vin."], "du → de."),
+  Tr("Mets à la forme négative : Elle mange de la viande.", ["Elle ne mange pas de viande."], "de la → de."),
+  Tr("Mets à la forme négative : Nous avons un chien.", ["Nous n'avons pas de chien."], "un → de."),
+  Tr("Mets à la forme négative : Il y a de l'eau.", ["Il n'y a pas d'eau."], "de l' → d'."),
+  Tr("Mets à la forme négative : Il fait du sport.", ["Il ne fait pas de sport."], "du → de."),
+  Tr("Mets à la forme négative : C'est une bonne idée.", ["Ce n'est pas une bonne idée."], "Avec être, l'article reste."),
+  Tr("Mets à la forme négative : Ce sont des étudiants.", ["Ce ne sont pas des étudiants."], "Avec être, l'article reste."),
+  Tr("Mets à la forme négative : J'aime le chocolat.", ["Je n'aime pas le chocolat."], "L'article défini (le, la, les) ne change pas."),
+  M("Je n'ai pas ___ temps.", "de", ["du", "le"], "du → de après la négation."),
+  M("Ce n'est pas ___ problème.", "un", ["de", "d'"], "Avec être, l'article reste."),
+  M("Je ne déteste pas ___ café.", "le", ["de", "du"], "Article défini : il ne change pas."),
+  M("Il n'y a plus ___ œufs.", "d'", ["des", "de"], "de → d' devant une voyelle."),
+  M("Je n'ai jamais vu ___ éléphant.", "d'", ["un", "d'un"], "un → d' après jamais aussi."),
+  M("Je n'ai que ___ pain.", "du", ["de", "le"], "ne … que n'est pas une négation : l'article reste.")
+];
+const NEG_PLACE = [
+  O(["Je", "ne", "le", "vois", "pas", "."], "ne + pronom + verbe + pas."),
+  O(["Il", "n'a", "jamais", "voyagé", "."], "jamais entre l'auxiliaire et le participe."),
+  O(["Elle", "n'est", "pas", "encore", "arrivée", "."], "pas encore entre l'auxiliaire et le participe."),
+  O(["Je", "ne", "lui", "ai", "rien", "dit", "."], "ne + pronom + auxiliaire + rien + participe."),
+  O(["Nous", "n'avons", "vu", "personne", "."], "personne après le participe."),
+  O(["Je", "ne", "l'ai", "trouvé", "nulle", "part", "."], "nulle part après le participe."),
+  O(["Il", "m'a", "demandé", "de", "ne", "pas", "parler", "."], "Infinitif : ne pas ensemble devant."),
+  O(["Je", "n'ai", "aucune", "idée", "."], "aucun(e) devant le nom."),
+  O(["Ne", "fume", "pas", "ici", "!"], "Impératif négatif : ne + verbe + pas."),
+  O(["Ne", "me", "parle", "plus", "!"], "Impératif négatif : ne + pronom + verbe + plus."),
+  O(["Tu", "ne", "t'es", "pas", "levé", "?"], "Verbe pronominal : ne + se + auxiliaire + pas + participe."),
+  M("Choisis l'ordre correct.", "Je ne l'ai pas vu.", ["Je ne l'ai vu pas.", "Je l'ai ne pas vu."], "ne + pronom + auxiliaire + pas + participe."),
+  M("Choisis l'ordre correct.", "Je préfère ne rien dire.", ["Je ne préfère rien dire.", "Je préfère dire ne rien."], "Infinitif : ne rien ensemble devant."),
+  M("Choisis l'ordre correct.", "Il n'a vu personne.", ["Il n'a personne vu.", "Il personne n'a vu."], "personne après le participe."),
+  M("Choisis l'ordre correct.", "Elle ne s'est jamais mariée.", ["Elle ne s'est mariée jamais.", "Elle s'est ne jamais mariée."], "ne + se + auxiliaire + jamais + participe."),
+  M("Choisis l'ordre correct.", "Il n'y en a plus.", ["Il n'en y a plus.", "Il y n'en a plus."], "ne + y + en + verbe + plus.")
+];
+const NEG_REP = [
+  Mt("Associe le mot positif et sa négation.", [["quelqu'un", "personne"], ["quelque chose", "rien"], ["déjà", "pas encore"], ["encore", "ne … plus"], ["partout", "nulle part"], ["aussi", "non plus"]], "Chaque mot positif a sa négation."),
+  Mt("Associe le mot positif et sa négation.", [["et … et", "ni … ni"], ["souvent", "jamais"], ["des questions", "aucune question"], ["beaucoup", "pas grand-chose"], ["quelque part", "nulle part"]], "Chaque mot positif a sa négation."),
+  Tr("Réponds avec personne : Tu attends quelqu'un ?", ["Je n'attends personne."], "quelqu'un → ne … personne."),
+  Tr("Réponds avec rien : Tu as acheté quelque chose ?", ["Je n'ai rien acheté."], "quelque chose → ne … rien, avant le participe."),
+  Tr("Réponds avec pas encore : Tu as déjà fini ?", ["Je n'ai pas encore fini."], "déjà → pas encore."),
+  Tr("Réponds avec nulle part : Tu vas quelque part ce week-end ?", ["Je ne vais nulle part ce week-end."], "quelque part → nulle part."),
+  Tr("Réponds avec personne : Tu as parlé à quelqu'un ?", ["Je n'ai parlé à personne."], "personne après le participe, avec la préposition."),
+  Tr("Réponds avec ni … ni : Tu parles anglais et allemand ?", ["Je ne parle ni anglais ni allemand."], "et … et → ni … ni."),
+  Tr("Réponds avec aucun : Tu as des questions ?", ["Je n'ai aucune question."], "aucun(e) + nom au singulier."),
+  Tr("Réponds avec plus : Il habite encore à Lyon ?", ["Il n'habite plus à Lyon."], "encore → ne … plus."),
+  Tr("Réponds avec jamais : Vous êtes déjà allés au Japon ?", ["Nous ne sommes jamais allés au Japon.", "Nous ne sommes jamais allées au Japon."], "déjà (ever) → jamais."),
+  Tr("Réponds avec rien : Quelque chose est arrivé ?", ["Rien n'est arrivé."], "Rien en sujet + ne."),
+  Tr("Réponds avec personne : Quelqu'un a téléphoné ?", ["Personne n'a téléphoné."], "Personne en sujet + ne."),
+  Tr("Réponds avec non plus : Je n'aime pas le froid. Et toi ?", ["Moi non plus.", "Je n'aime pas le froid non plus.", "Moi non plus, je n'aime pas le froid."], "Accord avec une négation → non plus."),
+  Tr("Réponds avec jamais : Tu vas souvent au cinéma ?", ["Je ne vais jamais au cinéma."], "souvent → jamais.")
+];
+const NEG_SUJ = [
+  M("___ n'a compris. (nobody)", "Personne", ["Rien", "Aucun"], "Personne en sujet + ne."),
+  M("Rien ___ marche aujourd'hui.", "ne", ["pas", "ne pas"], "Rien en sujet + ne, sans pas."),
+  F("Personne ___ est venu.", "n'", "ne devient n' devant une voyelle."),
+  M("Aucune réponse ___ correcte.", "n'est", ["est", "n'est pas"], "aucun + ne, sans pas."),
+  M("Ni Paul ni Marie ___ venus.", "ne sont", ["ne sont pas", "sont"], "ni … ni en sujet : ne + verbe au pluriel."),
+  M("Je ne dis ___ à personne.", "rien", ["pas", "aucun"], "Combinaison : ne … rien à personne."),
+  M("Il ne fait ___ rien.", "plus", ["pas", "aucun"], "Combinaison : ne … plus rien."),
+  O(["Je", "ne", "dis", "plus", "jamais", "rien", "."], "Ordre : plus + jamais + rien."),
+  O(["Personne", "ne", "m'a", "rien", "dit", "."], "Personne en sujet, rien avant le participe."),
+  M("Tu ne viens pas ? — ___, je viens !", "Si", ["Oui", "Non"], "Réponse positive à une question négative → si."),
+  M("Tu ne viens pas ? — ___, je reste ici.", "Non", ["Si", "Oui"], "Confirmer la négation → non."),
+  M("Tu viens ? — ___, j'arrive !", "Oui", ["Si", "Non"], "Question positive → oui."),
+  M("Il n'aime pas le jazz. — Moi ___.", "non plus", ["aussi", "si"], "Accord avec une négation → non plus."),
+  M("Il n'aime pas le jazz. — Moi, ___ ! (I do)", "si", ["oui", "aussi"], "Contredire une négation → si."),
+  M("Je n'ai ___ dix euros. (only)", "que", ["pas", "plus"], "ne … que = seulement."),
+  Tr("Écris avec ne … que : Il a seulement un frère.", ["Il n'a qu'un frère."], "ne … que ; l'article reste."),
+  Tr("Écris avec ne … que : Elle boit seulement de l'eau.", ["Elle ne boit que de l'eau."], "ne … que ; l'article reste."),
+  M("À l'oral on dit « J'sais pas ». À l'écrit :", "Je ne sais pas.", ["Je sais pas.", "J'sais pas."], "À l'écrit, garde toujours le ne.")
+];
 const REL_TR = [
   Tr("Relie avec qui ou que : J'ai un ami. Il parle chinois.", ["J'ai un ami qui parle chinois."], "Il (sujet) → qui."),
   Tr("Relie avec qui ou que : Voici le livre. Je lis ce livre.", ["Voici le livre que je lis."], "ce livre (COD) → que."),
@@ -182,5 +276,10 @@ const EXTRA_SETS = {
   "8": [{ id: "rel", title: "Relier deux phrases", desc: "Écris une seule phrase avec qui ou que.", items: REL_TR }],
   "12": [{ id: "dem", title: "Associer", desc: "Nom → pronom démonstratif.", items: DEM_MATCH }],
   "15": [{ id: "poss", title: "Associer", desc: "Adjectif possessif → pronom.", items: POSS_MATCH }],
-  "17": [{ id: "negtr", title: "Transformer à la négative", desc: "Écris toute la phrase à la forme négative.", items: NEG_TR }]
+  "17": [{ id: "negsens", title: "Quel mot négatif ?", desc: "jamais, plus, pas encore, personne, rien, aucun, ne … que : choisis selon le sens.", items: NEG_SENS },
+         { id: "negde", title: "un, du, des → de", desc: "L'article après la négation, et l'exception avec être.", items: NEG_DE },
+         { id: "negplace", title: "La place des mots", desc: "Pronoms, passé composé, infinitif, impératif.", items: NEG_PLACE },
+         { id: "negrep", title: "Répondre à la négative", desc: "quelqu'un → personne, déjà → pas encore, encore → plus…", items: NEG_REP },
+         { id: "negtr", title: "Transformer à la négative", desc: "Écris toute la phrase à la forme négative.", items: NEG_TR },
+         { id: "negsuj", title: "Sujet, combinaisons, si", desc: "Personne n'est venu. Je ne dis plus rien. Si / non plus / ne … que.", items: NEG_SUJ }]
 };
